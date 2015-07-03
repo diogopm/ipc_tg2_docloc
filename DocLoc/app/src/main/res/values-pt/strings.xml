@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DocLoc</string>
+    <string name="title_activity_main">DocLoc</string>
+
+    <string name="hello_world">Olá mundo!</string>
+    <string name="action_settings">Definições</string>
+    <string name="action_notifications">Notificações</string>
+</resources>
