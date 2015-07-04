@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="64dp"
+        android:id="@+id/imageView_marker"
+        android:background="@drawable/map_marker"/>
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/imageView_marker_avatar"
+        android:background="@drawable/ic_face_black"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:id="@+id/imageView_marker_status"
+        android:background="@android:drawable/presence_online"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/imageView_marker"
+        android:layout_alignEnd="@+id/imageView_marker"/>
+
+</RelativeLayout>

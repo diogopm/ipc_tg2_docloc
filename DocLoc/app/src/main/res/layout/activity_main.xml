@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
@@ -9,14 +9,6 @@
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar"/>
-
-    <pt.ipbeja.estig.ipc.docloc.tabs.SlidingTabLayout
-        android:id="@+id/main_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:theme="@style/tabTheme">
-
-    </pt.ipbeja.estig.ipc.docloc.tabs.SlidingTabLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/main_pager"

@@ -61,6 +61,25 @@ public class Person implements Parcelable {
         return lastName;
     }
 
+    public String getFullName()
+    {
+        return firstName + " " + lastName;
+    }
+
+    public String getStatusDescriptive()
+    {
+        switch (status)
+        {
+            case AVAILABLE:
+                return "Available";
+            case BUSY:
+                return "Busy";
+            case OFFLINE:
+                return "Offline";
+        }
+        return null;
+    }
+
     public boolean isFavorite()
     {
         return isFavorite;
