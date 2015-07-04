@@ -1,27 +1,25 @@
 package pt.ipbeja.estig.ipc.docloc;
 
-import android.app.Fragment;
-import android.content.Context;
+
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+
+import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.PopupWindow;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
-/**
- * Created by Diogo on 03/07/2015.
- */
 
 public class MapTab extends Fragment
 {
@@ -44,38 +42,61 @@ public class MapTab extends Fragment
 
     }
 
+    private static View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         if (container == null) {
             return null;
         }
 
-        setHasOptionsMenu(true);
-        View view = inflater.inflate(R.layout.fragment_maptab, container, false);
+
+        if(view != null)
+        {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if(parent != null) parent.removeView(view);
+        }
+
+        try
+        {
+            view = inflater.inflate(R.layout.fragment_maptab, container, false);
+
+        }
+        catch (InflateException e)
+        {
+
+        }
+        /*
+        if (container == null) {
+            return null;
+        }*/
+
+        //setHasOptionsMenu(true);
+        //View view = inflater.inflate(R.layout.fragment_maptab, container, false);
         setUpMapIfNeeded();
 
         return view;
     }
-
+    /*
     public PopupWindow getPwindo()
     {
         return pwindo;
-    }
+    }*/
 
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.dropdown, menu);
+        //inflater.inflate(R.menu.dropdown, menu);
     }
 
     public void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (this.mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-
-            this.mMap = ((MapFragment) MainActivity.fragmentManager
-                    .findFragmentById(R.id.map)).getMap();
+            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+            this.mMap = mapFragment.getMap();
 
             // Check if we were successful in obtaining the map.
             if (this.mMap != null)
@@ -87,31 +108,77 @@ public class MapTab extends Fragment
 
 
     private void setUpMap() {
-        this.mMap.setMyLocationEnabled(true);
-        this.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(39.378336, -8.016493), 6f));
+        this.mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.setMyLocationEnabled(false);
+        mMap.getUiSettings().setRotateGesturesEnabled(false);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setCompassEnabled(false);
+        mMap.getUiSettings().setZoomGesturesEnabled(false);
+        mMap.getUiSettings().setScrollGesturesEnabled(false);
+
+
+        //this.mMap.setMyLocationEnabled(true); //38.015748, -7.874964
+        this.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(39.346070, -8.034906), 6f));
 
         this.markerMap = new HashMap<>();
 
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        //LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
-        final int padding = 100; // offset
-        final LatLngBounds bounds = builder.build();
+        //final int padding = 100; // offset
+        //final LatLngBounds bounds = builder.build();
 
-        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback()
+        {
             @Override
-            public void onMapLoaded() {
+            public void onMapLoaded()
+            {
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.016125, -7.875400), 18f));
             }
         });
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+        {
             @Override
-            public boolean onMarkerClick(final Marker marker) {
-                new Handler().postDelayed(new Runnable() {
+            public boolean onMarkerClick(final Marker marker)
+            {
+                new Handler().postDelayed(new Runnable()
+                {
 
                     @Override
-                    public void run() {
+                    public void run()
+                    {
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 18f));
+                    }
+                }, 300);
+
+                return false;
+            }
+        });
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
+        {
+            @Override
+            public void onInfoWindowClick(Marker marker)
+            {
+                Intent a = new Intent(getActivity(), PersonView.class);
+                a.putExtra("person", MapTab.this.markerMap.get(marker));
+                startActivity(a);
+            }
+        });
+        /*
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+        {
+            @Override
+            public boolean onMarkerClick(final Marker marker)
+            {
+                new Handler().postDelayed(new Runnable()
+                {
+
+                    @Override
+                    public void run()
+                    {
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 13f));
                     }
                 }, 300);
@@ -120,16 +187,30 @@ public class MapTab extends Fragment
             }
         });
 
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
+        {
             @Override
-            public void onInfoWindowClick(Marker marker) {
+            public void onInfoWindowClick(Marker marker)
+            {
                 Intent a = new Intent(getActivity(), PersonView.class);
                 a.putExtra("person", MapTab.this.markerMap.get(marker));
                 startActivity(a);
             }
-        });
+        });*/
 
         //addOverlay();
+
+        ArrayList<Person> personList = (ArrayList<Person>) new PersonManager().getPersonList();
+
+        for(Person p: personList)
+        {
+            if(p.getPosition() == null) continue;
+
+            Marker m = this.mMap.addMarker(new MarkerOptions().position(p.getPosition()).
+                    title(p.getFirstName() + " "  + p.getLastName()).snippet(p.getDepartment()));
+            this.markerMap.put(m, p);
+        }
+
     }
 
     /**** The mapfragment's id must be removed from the FragmentManager
@@ -138,19 +219,20 @@ public class MapTab extends Fragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
+        /*
         if (mMap != null) {
             try {
-                MainActivity.fragmentManager.beginTransaction()
-                        .remove(MainActivity.fragmentManager.findFragmentById(R.id.map)).commit();
+                getChildFragmentManager().beginTransaction().remove(getChildFragmentManager().findFragmentById(R.id.map)).commit();
+                //MainActivity.fragmentManager.beginTransaction()
+                 //       .remove(MainActivity.fragmentManager.findFragmentById(R.id.map)).commit();
             }
             catch (IllegalStateException ignored)
             {
-
+                Log.e("destroy", "falhou");
             }
 
             mMap = null;
-        }
+        }*/
 
     }
 
@@ -159,34 +241,21 @@ public class MapTab extends Fragment
     @Override
     public void onPause(){
         super.onPause();
-        super.onPause();
+        /*
         if(pwindo != null && pwindo.isShowing())
         {
             pwindo.dismiss();
             pwindo = null;
-        }
+        }*/
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.dropdown:
-                if (null != pwindo) {
-                    if (pwindo.isShowing()) {
-                        pwindo.dismiss();
-                    } else {
-                        pwindo.showAsDropDown(getActivity().findViewById(R.id.dropdown));
-                    }
-                } else {
-                    View v = getActivity().findViewById(R.id.dropdown);
-                    initiatePopupWindow(v);
-                }
-                return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
-
+/*
     private void initiatePopupWindow(View root) {
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext()
@@ -204,5 +273,5 @@ public class MapTab extends Fragment
         pwindo.showAsDropDown((View) root);
 
 
-    }
+    }*/
 }

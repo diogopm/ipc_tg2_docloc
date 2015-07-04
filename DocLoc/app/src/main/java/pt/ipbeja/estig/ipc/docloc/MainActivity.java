@@ -1,44 +1,57 @@
 package pt.ipbeja.estig.ipc.docloc;
 
-import android.app.Activity;
-import android.content.Context;
-import android.hardware.Sensor;
+import android.app.ActionBar;
 import android.hardware.SensorManager;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.List;
+import pt.ipbeja.estig.ipc.docloc.tabs.SlidingTabLayout;
 
 
 public class MainActivity extends AppCompatActivity
 {
 
     private Toolbar toolbar;
-    private SensorManager sensorManager;
+    public static FragmentManager fragmentManager;
+
+    private ViewPager mPager;
+    private SlidingTabLayout mTabs;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fragmentManager = getSupportFragmentManager();
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
+
+        //TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabs);
+        mTabs = (SlidingTabLayout) findViewById(R.id.main_tabs);
+        mTabs.setDistributeEvenly(true);
+        mTabs.setSelectedIndicatorColors(getResources().getColor(R.color.accentColor));
+
+        mPager = (ViewPager) findViewById(R.id.main_pager);
+
+        mPager.setAdapter(new MainPagerAdapter(fragmentManager, this));
+        mTabs.setViewPager(mPager);
+        //mPager.setCurrentItem(1);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setIcon(getResources().getDrawable(R.mipmap.ic_launcher));
 
-//        this.sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-//        List<Sensor> sensors = this.sensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
-
-        PagerTabStrip pagerTabStrip = new PagerTabStrip(this);
+        //viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), this));
+        //tabLayout.setupWithViewPager(viewPager);
 
     }
 
