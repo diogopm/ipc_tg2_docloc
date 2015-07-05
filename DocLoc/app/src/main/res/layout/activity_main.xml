@@ -10,6 +10,12 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar"/>
 
+    <pt.ipbeja.estig.ipc.docloc.tabs.SlidingTabLayout
+        android:id="@+id/main_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:theme="@style/tabTheme"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/main_pager"
         android:layout_width="match_parent"

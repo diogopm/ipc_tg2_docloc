@@ -3,36 +3,45 @@ package pt.ipbeja.estig.ipc.docloc;
 import android.widget.ArrayAdapter;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by Diogo on 04/07/2015.
  */
 public class PersonManager
 {
-    private List<Person> personList;
+    private HashSet<Person> personList;
+    private HashMap<Marker, Person> mapMarker;
+    private static PersonManager instance;
 
-    public PersonManager()
+    private PersonManager()
     {
-        this.personList = new ArrayList<>();
+
+        this.personList = new HashSet<>();
         Person a = new Person("Joao", "Silva", "Fisica");
         Person b = new Person("Pedro", "Martins", "Matematica");
         Person c = new Person("Rita", "Fernandes", "Gestao");
         Person d = new Person("Manuela", "Pereira", "Informatica");
 
         a.setStatus(Person.AVAILABLE);
-        a.setPosition(new LatLng(38.016125, -7.875782));
+        a.setPosition(38.016125f, -7.875782f);
 
         b.setStatus(Person.BUSY);
-        b.setPosition(new LatLng(38.016216, -7.875590));
+        b.setPosition(38.016216f, -7.875590f);
+        b.toggleFavorite();
 
         c.setStatus(Person.AVAILABLE);
-        c.setPosition(new LatLng(38.016316, -7.875395));
+        c.setPosition(38.016316f, -7.875395f);
 
         d.setStatus(Person.OFFLINE);
-        d.setPosition(new LatLng(38.015953, -7.875611));
+        d.setPosition(38.015953f, -7.875611f);
+
 
 
         personList.add(a);
@@ -42,8 +51,34 @@ public class PersonManager
 
     }
 
-    public List<Person> getPersonList()
+
+
+    public static PersonManager getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new PersonManager();
+        }
+        return instance;
+    }
+
+    public HashSet<Person> getPersonList()
     {
         return this.personList;
+    }
+
+    public void setPersonList(HashSet<Person> personList)
+    {
+        this.personList = personList;
+    }
+
+    public HashMap<Marker, Person> getMapMarker()
+    {
+        return mapMarker;
+    }
+
+    public void setMapMarker(HashMap<Marker, Person> mapMarker)
+    {
+        this.mapMarker = mapMarker;
     }
 }

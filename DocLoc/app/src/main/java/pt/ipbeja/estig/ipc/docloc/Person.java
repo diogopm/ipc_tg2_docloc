@@ -10,13 +10,16 @@ import java.io.Serializable;
 /**
  * Created by Diogo on 03/07/2015.
  */
-public class Person implements Parcelable {
+public class Person implements Serializable
+{
+
     private String firstName;
     private String lastName;
     private boolean isFavorite;
     private String department;
     private int status;
-    private LatLng position;
+    private float latitude;
+    private float longitude;
 
     public static final int AVAILABLE = 2;
     public static final int BUSY = 1;
@@ -30,17 +33,43 @@ public class Person implements Parcelable {
         this.status = OFFLINE;
     }
 
-    public void setPosition(LatLng position)
+    public float getLatitude()
     {
-        this.position = position;
+        return latitude;
+    }
+
+    public void setLatitude(float latitude)
+    {
+        this.latitude = latitude;
+    }
+
+    public float getLongitude()
+    {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude)
+    {
+        this.longitude = longitude;
     }
 
     public LatLng getPosition()
     {
-        if(status == OFFLINE) return null;
-        return position;
+        return new LatLng(this.latitude, this.longitude);
     }
 
+    /*
+        public void setPosition(LatLng position)
+        {
+            this.position = position;
+        }
+
+        public LatLng getPosition()
+        {
+            if(status == OFFLINE) return null;
+            return position;
+        }
+    */
     public void setStatus(int status)
     {
         this.status = status;
@@ -100,41 +129,35 @@ public class Person implements Parcelable {
         return status;
     }
 
-
-    protected Person(Parcel in) {
-        firstName = in.readString();
-        lastName = in.readString();
-        isFavorite = in.readByte() != 0x00;
-        department = in.readString();
-        status = in.readInt();
-        position = (LatLng) in.readValue(LatLng.class.getClassLoader());
+    public void setPosition(float latitude, float longitude)
+    {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     @Override
-    public int describeContents() {
-        return 0;
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+        if(person.fullName().equals(this.fullName())) return true;
+
+        return false;
+
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(firstName);
-        dest.writeString(lastName);
-        dest.writeByte((byte) (isFavorite ? 0x01 : 0x00));
-        dest.writeString(department);
-        dest.writeInt(status);
-        dest.writeValue(position);
+    public int hashCode()
+    {
+        int result = firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + (isFavorite ? 1 : 0);
+        result = 31 * result + department.hashCode();
+        result = 31 * result + status;
+        result = 31 * result + (latitude != +0.0f ? Float.floatToIntBits(latitude) : 0);
+        result = 31 * result + (longitude != +0.0f ? Float.floatToIntBits(longitude) : 0);
+        return result;
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Person> CREATOR = new Parcelable.Creator<Person>() {
-        @Override
-        public Person createFromParcel(Parcel in) {
-            return new Person(in);
-        }
-
-        @Override
-        public Person[] newArray(int size) {
-            return new Person[size];
-        }
-    };
 }

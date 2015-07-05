@@ -155,18 +155,9 @@ public class MapTab extends Fragment
             }
         });
 
-
-
-
-        //this.mMap.setMyLocationEnabled(true); //38.015748, -7.874964
         this.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(39.346070, -8.034906), 6f));
 
         this.markerMap = new HashMap<>();
-
-        //LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-        //final int padding = 100; // offset
-        //final LatLngBounds bounds = builder.build();
 
         mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback()
         {
@@ -174,59 +165,28 @@ public class MapTab extends Fragment
             public void onMapLoaded()
             {
 
-                //mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.016125, -7.875400), 18f));
             }
         });
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
-        {
-            @Override
-            public boolean onMarkerClick(final Marker marker)
-            {
-                new Handler().postDelayed(new Runnable()
-                {
-
-                    @Override
-                    public void run()
-                    {
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 18f));
-                    }
-                }, 300);
-
-                return false;
-            }
-        });
-
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
-        {
-            @Override
-            public void onInfoWindowClick(Marker marker)
-            {
-                Intent a = new Intent(getActivity(), PersonView.class);
-                a.putExtra("person", MapTab.this.markerMap.get(marker));
-                startActivity(a);
-            }
-        });
-        /*
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
-        {
-            @Override
-            public boolean onMarkerClick(final Marker marker)
-            {
-                new Handler().postDelayed(new Runnable()
-                {
-
-                    @Override
-                    public void run()
-                    {
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 13f));
-                    }
-                }, 300);
-
-                return false;
-            }
-        });
+//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+//        {
+//            @Override
+//            public boolean onMarkerClick(final Marker marker)
+//            {
+//                new Handler().postDelayed(new Runnable()
+//                {
+//
+//                    @Override
+//                    public void run()
+//                    {
+//                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 18f));
+//                    }
+//                }, 300);
+//
+//                return false;
+//            }
+//        });
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
         {
@@ -234,23 +194,23 @@ public class MapTab extends Fragment
             public void onInfoWindowClick(Marker marker)
             {
                 Intent a = new Intent(getActivity(), PersonView.class);
-                a.putExtra("person", MapTab.this.markerMap.get(marker));
+                Person p = MapTab.this.markerMap.get(marker);
+                a.putExtra("person", p);
                 startActivity(a);
             }
-        });*/
+        });
 
-        //addOverlay();
-
-        ArrayList<Person> personList = (ArrayList<Person>) new PersonManager().getPersonList();
+        PersonManager pm = PersonManager.getInstance();
         View marker = getLayoutInflater(null).inflate(R.layout.custom_marker, null);
 
-        for(Person p: personList)
+        for(Person p: pm.getPersonList())
         {
-            if(p.getPosition() == null) continue;
+            if(p.getStatus() == Person.OFFLINE) continue;
             ((ImageView)marker.findViewById(R.id.imageView_marker_status)).setImageDrawable(p.getStatus() == Person.AVAILABLE ? getResources().getDrawable(android.R.drawable.presence_online) : getResources().getDrawable(android.R.drawable.presence_busy));
             Marker m = this.mMap.addMarker(new MarkerOptions().position(p.getPosition()).
                     title(p.getFirstName() + " "  + p.getLastName()).snippet(p.getDepartment()).icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker))));
             this.markerMap.put(m, p);
+
         }
 
     }
