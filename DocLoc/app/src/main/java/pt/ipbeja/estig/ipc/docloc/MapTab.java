@@ -212,6 +212,7 @@ public class MapTab extends Fragment
             this.markerMap.put(m, p);
 
         }
+        pm.setMapMarker(this.markerMap);
 
     }
 

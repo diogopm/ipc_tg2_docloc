@@ -1,32 +1,19 @@
 package pt.ipbeja.estig.ipc.docloc;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
-
-import java.util.Random;
 
 public class PersonView extends AppCompatActivity
 {
@@ -38,11 +25,10 @@ public class PersonView extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_view);
         PersonManager pm = PersonManager.getInstance();
-
         Intent intent = getIntent();
-
-
         this.person = (Person) intent.getSerializableExtra("person");
+
+        Person b = pm.getMapMarker().get(this.person);
         for (Person p : pm.getPersonList())
         {
             if(p.equals(person))
@@ -53,12 +39,23 @@ public class PersonView extends AppCompatActivity
         }
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
+
+        ActionBar ab = getSupportActionBar();
+
+        ab.setDisplayShowHomeEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeButtonEnabled(true);
+        ab.setDisplayUseLogoEnabled(true);
+        ab.setDisplayShowTitleEnabled(true);
+        ab.setTitle(person.getFullName());
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(person.getFullName());
-        setup();
+
+        //collapsingToolbar.setStatusBarScrimColor(getResources().getColor(R.color.primaryColorDark));
 
         loadBackdrop();
     }
@@ -81,6 +78,7 @@ public class PersonView extends AppCompatActivity
         {
             fa.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_unchecked));
         }
+
 
     }
 
@@ -106,7 +104,7 @@ public class PersonView extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.sample_actions, menu);
+        //getMenuInflater().inflate(R.menu.sample_actions, menu);
         return true;
     }
 
@@ -124,7 +122,8 @@ public class PersonView extends AppCompatActivity
             Snackbar.make(item.getRootView(), this.person.getFullName() + " removed from your favorites.", Snackbar.LENGTH_SHORT).show();
             fa.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_unchecked));
         }
-
     }
+
+
 
 }

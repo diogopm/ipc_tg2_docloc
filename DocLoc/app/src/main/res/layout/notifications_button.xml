@@ -30,7 +30,7 @@
         android:layout_alignTop="@id/imageView_profile_button"
         android:layout_alignRight="@id/imageView_profile_button"
         android:layout_marginRight="0dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
         android:paddingBottom="0dp"
         android:paddingRight="4dp"
         android:paddingLeft="4dp"

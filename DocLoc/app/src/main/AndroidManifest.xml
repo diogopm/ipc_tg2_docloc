@@ -33,6 +33,9 @@
             android:name=".PersonView"
             android:label="@string/title_activity_person_view"
             android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ipbeja.estig.ipc.docloc.MainActivity" />
         </activity>
     </application>
 
