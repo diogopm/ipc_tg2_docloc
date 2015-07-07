@@ -1,11 +1,17 @@
 package pt.ipbeja.estig.ipc.docloc;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,12 +37,18 @@ public class PersonView extends AppCompatActivity
         Person b = pm.getMapMarker().get(this.person);
         for (Person p : pm.getPersonList())
         {
-            if(p.equals(person))
+            if (p.equals(person))
             {
                 person = p;
                 break;
             }
         }
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new Adapter(getSupportFragmentManager(), PersonView.this));
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -51,25 +63,34 @@ public class PersonView extends AppCompatActivity
         ab.setDisplayShowTitleEnabled(true);
         ab.setTitle(person.getFullName());
 
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(person.getFullName());
+        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.ic_message));
+        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.ic_person));
 
-        //collapsingToolbar.setStatusBarScrimColor(getResources().getColor(R.color.primaryColorDark));
 
-        loadBackdrop();
+        //CollapsingToolbarLayout collapsingToolbar =
+         //       (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        //collapsingToolbar.setTitle(person.getFullName());
+
+
+        //loadBackdrop();
+
+
+
     }
+
+
 
     @Override
     public void onResume()
     {
         super.onResume();
-        setup();
+        //setup();
     }
 
     private void setup()
     {
         FloatingActionButton fa = (FloatingActionButton) findViewById(R.id.fab_favorite);
+
         if(this.person.isFavorite())
         {
             fa.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_white));
@@ -78,8 +99,6 @@ public class PersonView extends AppCompatActivity
         {
             fa.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_unchecked));
         }
-
-
     }
 
     @Override
@@ -124,6 +143,42 @@ public class PersonView extends AppCompatActivity
         }
     }
 
+    class Adapter extends FragmentPagerAdapter
+    {
+        final int PAGE_COUNT = 2;
+        private Context context;
+        private String tabTitles[] = new String[]{"Perfil", "Chat"};
+
+        public Adapter(FragmentManager fm, Context context) {
+            super(fm);
+            this.context = context;
+        }
 
 
+        @Override
+        public Fragment getItem(int position)
+        {
+
+            switch (position)
+            {
+                case 0:
+                    return PerfilTab.newInstance(position + 1);
+                default:
+                    return ChatFragment.newInstance(position + 1);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return PAGE_COUNT;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            //return this.tabTitles[position];
+            return "";
+        }
+    }
 }
+
+
