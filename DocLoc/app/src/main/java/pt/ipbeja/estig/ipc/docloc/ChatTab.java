@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -60,7 +61,7 @@ public class ChatTab extends Fragment
             chatItems.add(new ChatItem("At vero eos et accusamus"));
         }
 
-        Button button = (Button) view.findViewById(R.id.send_button);
+        ImageButton button = (ImageButton) view.findViewById(R.id.send_button);
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
