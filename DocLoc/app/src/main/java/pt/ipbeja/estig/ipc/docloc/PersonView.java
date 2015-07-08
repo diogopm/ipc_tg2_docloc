@@ -70,19 +70,7 @@ public class PersonView extends AppCompatActivity
             viewPager.setCurrentItem(1);
         }
 
-
-
     }
-
-
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        //setup();
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -96,12 +84,6 @@ public class PersonView extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadBackdrop()
-    {
-        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        Glide.with(this).load(R.drawable.woman2).centerCrop().into(imageView);
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

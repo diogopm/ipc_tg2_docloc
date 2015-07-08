@@ -1,40 +1,24 @@
 package pt.ipbeja.estig.ipc.docloc;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.transition.Slide;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
-import android.view.Window;
-import android.view.animation.Animation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.TableLayout;
 import android.widget.TextView;
-
-import java.util.Map;
-
-import pt.ipbeja.estig.ipc.docloc.tabs.SlidingTabLayout;
 
 
 public class MainActivity extends AppCompatActivity
@@ -42,9 +26,6 @@ public class MainActivity extends AppCompatActivity
 
     private Toolbar toolbar;
     public static FragmentManager fragmentManager;
-
-    private ViewPager mPager;
-    private SlidingTabLayout mTabs;
 
     private PopupWindow pwindo;
 
@@ -69,7 +50,6 @@ public class MainActivity extends AppCompatActivity
         tabLayout.getTabAt(0).setIcon(android.R.drawable.ic_dialog_map);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_favorite_white);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_message);
-
 
 
         tabLayout.setOnLongClickListener(new View.OnLongClickListener()
@@ -138,16 +118,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings)
-        {
-            return true;
-        } else*/ if (id == R.id.action_profile)
+        if (id == R.id.action_profile)
         {
 
             return true;
@@ -159,19 +131,13 @@ public class MainActivity extends AppCompatActivity
     private void initiatePopupWindow(View root)
     {
 
-        /*
-        getLayoutInflater().inflate()
-        LayoutInflater inflater = (LayoutInflater) getBaseContext()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);*/
-
         View layout = getLayoutInflater().inflate(R.layout.profile_dropdown, null);
 
         pwindo = new PopupWindow(layout,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, false);
 
-        //pwindo.setBackgroundDrawable(new BitmapDrawable());
-        pwindo.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
+        pwindo.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
         pwindo.setOutsideTouchable(true);
         pwindo.showAsDropDown(root);
 
@@ -196,10 +162,7 @@ public class MainActivity extends AppCompatActivity
     {
         if (null != pwindo)
         {
-            if (pwindo.isShowing())
-            {
-                //pwindo.dismiss();
-            } else
+            if (!pwindo.isShowing())
             {
                 pwindo.showAsDropDown(findViewById(R.id.action_profile));
             }
@@ -232,7 +195,6 @@ public class MainActivity extends AppCompatActivity
         Log.i("cenas", notificationCount + "");
         TextView tv = (TextView) item.findViewById(R.id.hotlist_hot);
         tv.setText(notificationCount + "");
-        //item.setVisibility(View.VISIBLE);
         tv.setVisibility(TextView.VISIBLE);
 
 
@@ -242,12 +204,13 @@ public class MainActivity extends AppCompatActivity
     class Adapter extends FragmentPagerAdapter
     {
         final int PAGE_COUNT = 3;
-        private Context context;
-        private String tabTitles[] = new String[]{"Mapa", "Favoritos", "Chat"};
+        //private Context context;
+        //private String tabTitles[] = new String[]{"Mapa", "Favoritos", "Chat"};
 
-        public Adapter(FragmentManager fm, Context context) {
+        public Adapter(FragmentManager fm, Context context)
+        {
             super(fm);
-            this.context = context;
+            //this.context = context;
         }
 
 
@@ -269,12 +232,14 @@ public class MainActivity extends AppCompatActivity
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return PAGE_COUNT;
         }
 
         @Override
-        public CharSequence getPageTitle(int position) {
+        public CharSequence getPageTitle(int position)
+        {
             //return this.tabTitles[position];
             return "";
         }

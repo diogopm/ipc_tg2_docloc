@@ -77,22 +77,10 @@ public class MapTab extends Fragment
         {
 
         }
-        /*
-        if (container == null) {
-            return null;
-        }*/
-
-        //setHasOptionsMenu(true);
-        //View view = inflater.inflate(R.layout.fragment_maptab, container, false);
         setUpMapIfNeeded();
 
         return view;
     }
-    /*
-    public PopupWindow getPwindo()
-    {
-        return pwindo;
-    }*/
 
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
@@ -101,13 +89,12 @@ public class MapTab extends Fragment
     }
 
     public void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (this.mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
+
+        if (this.mMap == null)
+        {
             SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
             this.mMap = mapFragment.getMap();
 
-            // Check if we were successful in obtaining the map.
             if (this.mMap != null)
                 this.setUpMap();
         }
@@ -123,8 +110,8 @@ public class MapTab extends Fragment
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.getUiSettings().setCompassEnabled(false);
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        LatLngBounds bounds = new LatLngBounds(new LatLng(38.015674, -7.876074), new LatLng(38.016573, -7.874719));
-        GroundOverlayOptions overlay = new GroundOverlayOptions().image(BitmapDescriptorFactory.fromResource(R.drawable.estig)).positionFromBounds(bounds);
+        final LatLngBounds bounds = new LatLngBounds(new LatLng(38.015560, -7.876150), new LatLng(38.016578, -7.874715));
+        GroundOverlayOptions overlay = new GroundOverlayOptions().image(BitmapDescriptorFactory.fromResource(R.drawable.estig2)).positionFromBounds(bounds);
         mMap.addGroundOverlay(overlay);
 
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter()
@@ -148,9 +135,6 @@ public class MapTab extends Fragment
                 iv.setImageDrawable(p.getStatus() == Person.AVAILABLE ? getResources().getDrawable(android.R.drawable.presence_online) : getResources().getDrawable(android.R.drawable.presence_busy));
                 tv = (TextView) v.findViewById(R.id.textView_info_room);
                 tv.setText(p.getRoom());
-                //iv.setBackground(p.getStatus() == Person.AVAILABLE ? getResources().getDrawable(android.R.drawable.presence_online) : getResources().getDrawable(android.R.drawable.presence_busy));
-
-
 
                 return v;
 
@@ -167,28 +151,10 @@ public class MapTab extends Fragment
             public void onMapLoaded()
             {
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.016125, -7.875400), 18f));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.016125, -7.875400), 18.2f));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 5));
             }
         });
-
-//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
-//        {
-//            @Override
-//            public boolean onMarkerClick(final Marker marker)
-//            {
-//                new Handler().postDelayed(new Runnable()
-//                {
-//
-//                    @Override
-//                    public void run()
-//                    {
-//                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 18f));
-//                    }
-//                }, 300);
-//
-//                return false;
-//            }
-//        });
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
         {
@@ -214,7 +180,6 @@ public class MapTab extends Fragment
             iv = (ImageView) marker.findViewById(R.id.imageView_marker_avatar);
             iv.setImageResource(p.getImage());
 
-            //((ImageView)marker.findViewById(R.id.imageView_marker_status)).setImageDrawable(p.getStatus() == Person.AVAILABLE ? getResources().getDrawable(android.R.drawable.presence_online) : getResources().getDrawable(android.R.drawable.presence_busy));
             Marker m = this.mMap.addMarker(new MarkerOptions().position(p.getPosition()).
                     title(p.getFullName()).snippet(p.getDepartment()).icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker))));
             this.markerMap.put(m, p);
@@ -224,40 +189,10 @@ public class MapTab extends Fragment
 
     }
 
-    /**** The mapfragment's id must be removed from the FragmentManager
-     **** or else if the same it is passed on the next time then
-     **** app will crash ****/
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        /*
-        if (mMap != null) {
-            try {
-                getChildFragmentManager().beginTransaction().remove(getChildFragmentManager().findFragmentById(R.id.map)).commit();
-                //MainActivity.fragmentManager.beginTransaction()
-                 //       .remove(MainActivity.fragmentManager.findFragmentById(R.id.map)).commit();
-            }
-            catch (IllegalStateException ignored)
-            {
-                Log.e("destroy", "falhou");
-            }
-
-            mMap = null;
-        }*/
-
-    }
-
-
 
     @Override
     public void onPause(){
         super.onPause();
-        /*
-        if(pwindo != null && pwindo.isShowing())
-        {
-            pwindo.dismiss();
-            pwindo = null;
-        }*/
     }
 
 
@@ -266,25 +201,6 @@ public class MapTab extends Fragment
 
         return super.onOptionsItemSelected(item);
     }
-/*
-    private void initiatePopupWindow(View root) {
-
-        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View layout = inflater.inflate(R.layout.marker_settings, null);
-
-        pwindo = new PopupWindow(layout,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT, false);
-
-        pwindo.setBackgroundDrawable(new BitmapDrawable());
-        //pwindo.setOutsideTouchable(true);
-
-        pwindo.showAsDropDown((View) root);
-
-
-    }*/
 
     public static Bitmap createDrawableFromView(Context context, View view) {
 
@@ -302,20 +218,4 @@ public class MapTab extends Fragment
         return bitmap;
     }
 
-
-    private void onClickProfile(View item)
-    {
-        switch (item.getId())
-        {
-            case R.id.radioButton_available:
-                Log.i("radio", "available");
-                break;
-            case R.id.radioButton_busy:
-                Log.i("radio", "busy");
-                break;
-            case R.id.radioButton_offline:
-                Log.i("radio", "offline");
-                break;
-        }
-    }
 }
