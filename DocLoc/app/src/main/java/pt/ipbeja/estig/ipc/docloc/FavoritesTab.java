@@ -63,13 +63,18 @@ public class FavoritesTab extends Fragment
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
             {
-                Person person = PersonManager.getInstance().getPersonList().get(viewHolder.getAdapterPosition());
-                int position = viewHolder.getAdapterPosition();
+                int position = viewHolder.getLayoutPosition();
+
+                Person person = PersonManager.getInstance().getFavoriteList().get(position);
+
                 person.toggleFavorite();
-                PersonManager.getInstance().getFavoriteList().remove(position);
-                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
                 Snackbar.make(recyclerView, String.format(getString(R.string.favorite_removed), person.fullName()), Snackbar.LENGTH_SHORT).show();
+                PersonManager.getInstance().getFavoriteList().remove(position);
+                adapter.notifyItemRemoved(position);
+                //adapter.notifyDataSetChanged();
+
+
             }
         };
 
