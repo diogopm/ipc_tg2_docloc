@@ -21,6 +21,7 @@
             android:value="AIzaSyDer4XfFIqgJDny6K9WjnNMA-UJbmSrq7g" />
 
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
@@ -32,6 +33,7 @@
         <activity
             android:name=".PersonView"
             android:label="@string/title_activity_person_view"
+            android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -146,6 +146,8 @@ public class MapTab extends Fragment
                 tv.setText(p.getStatusDescriptive());
                 ImageView iv = (ImageView) v.findViewById(R.id.imageView_info_status);
                 iv.setImageDrawable(p.getStatus() == Person.AVAILABLE ? getResources().getDrawable(android.R.drawable.presence_online) : getResources().getDrawable(android.R.drawable.presence_busy));
+                tv = (TextView) v.findViewById(R.id.textView_info_room);
+                tv.setText(p.getRoom());
                 //iv.setBackground(p.getStatus() == Person.AVAILABLE ? getResources().getDrawable(android.R.drawable.presence_online) : getResources().getDrawable(android.R.drawable.presence_busy));
 
 
@@ -196,6 +198,7 @@ public class MapTab extends Fragment
                 Intent a = new Intent(getActivity(), PersonView.class);
                 Person p = MapTab.this.markerMap.get(marker);
                 a.putExtra("person", p);
+
                 startActivity(a);
             }
         });

@@ -15,9 +15,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
@@ -28,13 +31,13 @@ public class PersonView extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_view);
         PersonManager pm = PersonManager.getInstance();
         Intent intent = getIntent();
         this.person = (Person) intent.getSerializableExtra("person");
 
-        Person b = pm.getMapMarker().get(this.person);
         for (Person p : pm.getPersonList())
         {
             if (p.equals(person))
@@ -87,19 +90,6 @@ public class PersonView extends AppCompatActivity
         //setup();
     }
 
-    private void setup()
-    {
-        FloatingActionButton fa = (FloatingActionButton) findViewById(R.id.fab_favorite);
-
-        if(this.person.isFavorite())
-        {
-            fa.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_white));
-        }
-        else
-        {
-            fa.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_unchecked));
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -132,14 +122,17 @@ public class PersonView extends AppCompatActivity
         FloatingActionButton fa = (FloatingActionButton) item;
         this.person.toggleFavorite();
 
+
         if (this.person.isFavorite())
         {
             Snackbar.make(item.getRootView(), this.person.getFullName() + " added to your favorites.", Snackbar.LENGTH_SHORT).show();
             fa.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_white));
+            PersonManager.getInstance().getFavoriteList().add(person);
         } else
         {
             Snackbar.make(item.getRootView(), this.person.getFullName() + " removed from your favorites.", Snackbar.LENGTH_SHORT).show();
             fa.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_unchecked));
+            PersonManager.getInstance().getFavoriteList().remove(person);
         }
     }
 
@@ -162,9 +155,9 @@ public class PersonView extends AppCompatActivity
             switch (position)
             {
                 case 0:
-                    return PerfilTab.newInstance(position + 1);
+                    return PerfilTab.newInstance(position + 1, PersonView.this.person);
                 default:
-                    return ChatFragment.newInstance(position + 1);
+                    return ChatTab.newInstance(position + 1);
             }
         }
 

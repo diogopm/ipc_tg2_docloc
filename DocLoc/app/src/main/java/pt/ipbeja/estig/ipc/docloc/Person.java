@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Created by Diogo on 03/07/2015.
@@ -20,6 +21,7 @@ public class Person implements Serializable
     private int status;
     private float latitude;
     private float longitude;
+    private int room;
 
     public static final int AVAILABLE = 2;
     public static final int BUSY = 1;
@@ -31,6 +33,13 @@ public class Person implements Serializable
         this.lastName = lastName;
         this.department = department;
         this.status = OFFLINE;
+
+        this.room = new Random().nextInt(50);
+    }
+
+    public String getRoom()
+    {
+        return "G" + this.room;
     }
 
     public float getLatitude()

@@ -5,21 +5,38 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               tools:context="pt.ipbeja.estig.ipc.docloc.MainActivity">
-
+<!--
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar"/>
+-->
 
-    <pt.ipbeja.estig.ipc.docloc.tabs.SlidingTabLayout
-        android:id="@+id/main_tabs"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:theme="@style/tabTheme"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/cebas"
+            app:layout_scrollFlags="scroll|enterAlways"
+            />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/sliding_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:theme="@style/tabTheme"/>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/main_pager"
+        android:id="@+id/viewpager"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </LinearLayout>

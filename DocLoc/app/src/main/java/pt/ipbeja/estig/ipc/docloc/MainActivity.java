@@ -5,12 +5,17 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,9 +23,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TableLayout;
 import android.widget.TextView;
+
+import java.util.Map;
 
 import pt.ipbeja.estig.ipc.docloc.tabs.SlidingTabLayout;
 
@@ -40,28 +52,55 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
 
-        //TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabs);
-        mTabs = (SlidingTabLayout) findViewById(R.id.main_tabs);
-        mTabs.setDistributeEvenly(true);
-        mTabs.setSelectedIndicatorColors(getResources().getColor(R.color.accentColor));
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new Adapter(getSupportFragmentManager(), MainActivity.this));
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
-        mPager = (ViewPager) findViewById(R.id.main_pager);
+        tabLayout.getTabAt(0).setIcon(android.R.drawable.ic_dialog_map);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_favorite_white);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_message);
 
-        mPager.setAdapter(new MainPagerAdapter(fragmentManager, this));
-        mTabs.setViewPager(mPager);
-        //mPager.setCurrentItem(1);
+
+
+        tabLayout.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                TabLayout tab = (TabLayout) v;
+
+                switch (viewPager.getCurrentItem())
+                {
+                    case 0:
+                        Snackbar.make(viewPager, "Mapa", Snackbar.LENGTH_SHORT).show();
+                        return true;
+                    case 1:
+                        Snackbar.make(viewPager, "Favoritos", Snackbar.LENGTH_SHORT).show();
+                        return true;
+                    case 2:
+                        Snackbar.make(viewPager, "Chat", Snackbar.LENGTH_SHORT).show();
+                        return true;
+                }
+                return false;
+            }
+        });
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setIcon(getResources().getDrawable(R.mipmap.ic_launcher));
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
-        //viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), this));
-        //tabLayout.setupWithViewPager(viewPager);
 
     }
 
@@ -91,7 +130,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        //return super.onCreateOptionsMenu(menu);
         return true;
     }
 
@@ -127,6 +165,7 @@ public class MainActivity extends AppCompatActivity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);*/
 
         View layout = getLayoutInflater().inflate(R.layout.profile_dropdown, null);
+
         pwindo = new PopupWindow(layout,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, false);
@@ -135,6 +174,7 @@ public class MainActivity extends AppCompatActivity
         pwindo.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
         pwindo.setOutsideTouchable(true);
         pwindo.showAsDropDown(root);
+
 
     }
 
@@ -158,7 +198,7 @@ public class MainActivity extends AppCompatActivity
         {
             if (pwindo.isShowing())
             {
-                pwindo.dismiss();
+                //pwindo.dismiss();
             } else
             {
                 pwindo.showAsDropDown(findViewById(R.id.action_profile));
@@ -175,13 +215,13 @@ public class MainActivity extends AppCompatActivity
         switch (item.getId())
         {
             case R.id.radioButton_available:
-                ((ImageView) findViewById(R.id.imageView_profile_status)).setImageDrawable(getResources().getDrawable(android.R.drawable.presence_online));
+                ((ImageView) findViewById(R.id.imageView_profile_status)).setImageResource(android.R.drawable.presence_online);
                 break;
             case R.id.radioButton_busy:
-                ((ImageView) findViewById(R.id.imageView_profile_status)).setImageDrawable(getResources().getDrawable(android.R.drawable.presence_busy));
+                ((ImageView) findViewById(R.id.imageView_profile_status)).setImageResource(android.R.drawable.presence_busy);
                 break;
             case R.id.radioButton_offline:
-                ((ImageView) findViewById(R.id.imageView_profile_status)).setImageDrawable(getResources().getDrawable(android.R.drawable.presence_offline));
+                ((ImageView) findViewById(R.id.imageView_profile_status)).setImageResource(android.R.drawable.presence_offline);
                 break;
         }
     }
@@ -196,5 +236,47 @@ public class MainActivity extends AppCompatActivity
         tv.setVisibility(TextView.VISIBLE);
 
 
+    }
+
+
+    class Adapter extends FragmentPagerAdapter
+    {
+        final int PAGE_COUNT = 3;
+        private Context context;
+        private String tabTitles[] = new String[]{"Mapa", "Favoritos", "Chat"};
+
+        public Adapter(FragmentManager fm, Context context) {
+            super(fm);
+            this.context = context;
+        }
+
+
+        @Override
+        public Fragment getItem(int position)
+        {
+
+            switch (position)
+            {
+                case 0:
+                    return MapTab.newInstance(position + 1);
+                case 1:
+                    return FavoritesTab.newInstance(position + 1);
+                case 2:
+                    return ChatTab.newInstance(position + 1);
+                default:
+                    return ChatTab.newInstance(position + 1);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return PAGE_COUNT;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            //return this.tabTitles[position];
+            return "";
+        }
     }
 }

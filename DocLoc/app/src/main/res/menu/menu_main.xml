@@ -16,7 +16,6 @@
         android:orderInCategory="100"
         android:title="@string/action_notifications"
         app:actionLayout="@layout/notifications_button"
-        android:icon="@drawable/ic_notifications_white"
         app:showAsAction="always"/>
 
     <item
@@ -24,7 +23,6 @@
         android:orderInCategory="99"
         android:title="Profile"
         app:actionLayout="@layout/profile_button"
-        android:icon="@drawable/ic_face_black"
         app:showAsAction="always"/>
 
 
