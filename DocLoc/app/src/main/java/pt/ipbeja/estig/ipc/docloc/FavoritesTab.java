@@ -69,7 +69,7 @@ public class FavoritesTab extends Fragment
                 PersonManager.getInstance().getFavoriteList().remove(position);
                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
-                Snackbar.make(FavoritesTab.this.recyclerView, "item removed", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(recyclerView, String.format(getString(R.string.favorite_removed), person.fullName()), Snackbar.LENGTH_SHORT).show();
             }
         };
 

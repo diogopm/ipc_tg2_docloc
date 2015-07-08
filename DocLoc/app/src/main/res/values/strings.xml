@@ -38,4 +38,6 @@
     <string name="status_busy">Busy</string>
     <string name="status_offline">Offline</string>
     <string name="last_seen">Last seen: 19h40</string>
+    <string name="favorite_added">%s added to your favorites</string>
+    <string name="favorite_removed">%s removed from your favorites</string>
 </resources>

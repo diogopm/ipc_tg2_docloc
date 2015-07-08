@@ -118,12 +118,12 @@ public class PersonView extends AppCompatActivity
 
         if (this.person.isFavorite())
         {
-            Snackbar.make(item.getRootView(), this.person.getFullName() + " added to your favorites.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(item.getRootView(), String.format(getString(R.string.favorite_added), person.fullName()), Snackbar.LENGTH_SHORT).show();
             fa.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_white));
             PersonManager.getInstance().getFavoriteList().add(person);
         } else
         {
-            Snackbar.make(item.getRootView(), this.person.getFullName() + " removed from your favorites.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(item.getRootView(), String.format(getString(R.string.favorite_removed), person.fullName()), Snackbar.LENGTH_SHORT).show();
             fa.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_unchecked));
             PersonManager.getInstance().getFavoriteList().remove(person);
         }

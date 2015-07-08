@@ -16,4 +16,6 @@
     <string name="status_busy">Ocupado</string>
     <string name="status_offline">Offline</string>
     <string name="last_seen">Visto pela última vez: 19h40</string>
+    <string name="favorite_added">%s adicionado aos seus favoritos</string>
+    <string name="favorite_removed">%s removido dos seus favoritos</string>
 </resources>
