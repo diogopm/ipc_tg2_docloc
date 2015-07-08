@@ -16,7 +16,6 @@
         android:id="@+id/imageView_marker_avatar"
         android:layout_height="40dp"
         android:layout_width="40dp"
-        android:src="@drawable/testeg"
         android:scaleType="centerCrop"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="3dp"

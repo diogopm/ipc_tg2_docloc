@@ -209,9 +209,14 @@ public class MapTab extends Fragment
         for(Person p: pm.getPersonList())
         {
             if(p.getStatus() == Person.OFFLINE) continue;
-            ((ImageView)marker.findViewById(R.id.imageView_marker_status)).setImageDrawable(p.getStatus() == Person.AVAILABLE ? getResources().getDrawable(android.R.drawable.presence_online) : getResources().getDrawable(android.R.drawable.presence_busy));
+            ImageView iv = (ImageView) marker.findViewById(R.id.imageView_marker_status);
+            iv.setImageResource(p.getStatusDrawableID());
+            iv = (ImageView) marker.findViewById(R.id.imageView_marker_avatar);
+            iv.setImageResource(p.getImage());
+
+            //((ImageView)marker.findViewById(R.id.imageView_marker_status)).setImageDrawable(p.getStatus() == Person.AVAILABLE ? getResources().getDrawable(android.R.drawable.presence_online) : getResources().getDrawable(android.R.drawable.presence_busy));
             Marker m = this.mMap.addMarker(new MarkerOptions().position(p.getPosition()).
-                    title(p.getFirstName() + " "  + p.getLastName()).snippet(p.getDepartment()).icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker))));
+                    title(p.getFullName()).snippet(p.getDepartment()).icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker))));
             this.markerMap.put(m, p);
 
         }
@@ -282,6 +287,7 @@ public class MapTab extends Fragment
     }*/
 
     public static Bitmap createDrawableFromView(Context context, View view) {
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         view.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));

@@ -82,17 +82,18 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/person_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical|right"
-                                android:src="@android:drawable/presence_online"/>
+                                android:layout_gravity="center_vertical|right"/>
 
                             <TextView
+                                android:id="@+id/person_status_descriptive"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="2dp"
-                                android:text="Disponível"/>
+                                android:text="@string/status_available"/>
                         </LinearLayout>
                     </RelativeLayout>
 
@@ -116,14 +117,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Nome"
+                                    android:text="@string/person_name"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
                                 <TextView
+                                    android:id="@+id/person_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:text="Rita Fernandes"/>
+                                    android:layout_marginLeft="5dp"/>
 
 
                             </LinearLayout>
@@ -136,14 +137,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Email"
+                                    android:text="@string/person_email"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
                                 <TextView
+                                    android:id="@+id/person_email"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:text="r.fernandes@ipbeja.pt"/>
+                                    android:layout_marginLeft="5dp"/>
 
                             </LinearLayout>
 
@@ -155,14 +156,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Departamento"
+                                    android:text="@string/person_department"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
                                 <TextView
+                                    android:id="@+id/person_department"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:text="Matemática"/>
+                                    android:layout_marginLeft="5dp"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -173,14 +174,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Gabinete"
+                                    android:text="@string/person_office"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
                                 <TextView
+                                    android:id="@+id/person_office"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:text="G43"/>
+                                    android:layout_marginLeft="5dp"/>
 
 
                             </LinearLayout>
@@ -206,7 +207,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Horário de Atendimento"
+                        android:text="@string/person_visiting_hours"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
                     <android.support.v7.widget.CardView
@@ -228,10 +229,11 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Quarta-feira"
+                                    android:text="@string/person_wednesday"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
                                 <TextView
+                                    android:id="@+id/person_wednesday"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
@@ -248,10 +250,11 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Sexta-feira"
+                                    android:text="@string/person_friday"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
                                 <TextView
+                                    android:id="@+id/person_friday"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
@@ -282,11 +285,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Outra info qualquer"
+                        android:text="@string/person_other_info"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
                     <TextView
-                        android:id="@+id/other_text_card"
+                        android:id="@+id/person_other_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/info_text"/>

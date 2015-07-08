@@ -55,15 +55,28 @@ public class ChatTab extends Fragment
         this.recyclerView.setLayoutManager(lm);
         if(chatItems.size() < 1)
         {
-            chatItems.add(new ChatItem("cenas"));
-            chatItems.add(new ChatItem("coisas"));
-            chatItems.add(new ChatItem("mais cenas"));
-            chatItems.add(new ChatItem("mais coisas"));
-            chatItems.add(new ChatItem("cenas"));
-            chatItems.add(new ChatItem("coisas"));
-            chatItems.add(new ChatItem("mais cenas"));
-            chatItems.add(new ChatItem("mais coisas"));
+            chatItems.add(new ChatItem("cenas e coisa e talvez mais cenas e quem sabe mais coisas"));
+            chatItems.add(new ChatItem("Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"));
+            chatItems.add(new ChatItem("At vero eos et accusamus"));
         }
+
+        Button button = (Button) view.findViewById(R.id.send_button);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EditText text = (EditText) view.findViewById(R.id.editText);
+                if(!text.toString().equals(""))
+                {
+                    chatItems.add(0, new ChatItem(text.getText().toString()));
+                    adapter.notifyItemInserted(0);
+                    recyclerView.smoothScrollToPosition(0);
+                    text.setText("");
+                }
+
+            }
+        });
 
 
         return view;

@@ -3,7 +3,6 @@ package pt.ipbeja.estig.ipc.docloc;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +13,8 @@ import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.zip.Inflater;
 
 
 public class FavoritesTab extends Fragment
@@ -118,8 +114,10 @@ public class FavoritesTab extends Fragment
             Person p = favorites.get(position);
             holder.name.setText(p.getFullName());
             holder.status.setText(p.getStatusDescriptive());
-            holder.lastSeen.setText("Last seen: 19h40");
-            holder.statusIcon.setImageResource(p.getStatus() == Person.AVAILABLE ? android.R.drawable.presence_online : p.getStatus() == Person.BUSY ? android.R.drawable.presence_busy : android.R.drawable.presence_offline);
+            holder.lastSeen.setText(R.string.last_seen);
+            holder.statusIcon.setImageResource(p.getStatusDrawableID());
+            //holder.profileImage.setImageResource(p.getImage());
+            //holder.statusIcon.setImageResource(p.getStatus() == Person.AVAILABLE ? android.R.drawable.presence_online : p.getStatus() == Person.BUSY ? android.R.drawable.presence_busy : android.R.drawable.presence_offline);
         }
 
         @Override
@@ -134,6 +132,7 @@ public class FavoritesTab extends Fragment
         TextView status;
         TextView lastSeen;
         ImageView statusIcon;
+        //ImageView profileImage;
 
         public FavoriteHolder(View itemView)
         {
@@ -144,6 +143,7 @@ public class FavoritesTab extends Fragment
             status = (TextView) itemView.findViewById(R.id.textview_status);
             lastSeen = (TextView) itemView.findViewById(R.id.textView_last_seen);
             statusIcon = (ImageView) itemView.findViewById(R.id.imageView_status);
+            //profileImage = (ImageView) itemView.findViewById(R.id.imageView);
         }
 
         @Override

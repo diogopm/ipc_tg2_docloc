@@ -15,25 +15,17 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:background="?selectableItemBackground"
-        android:clickable="true">
-        <!--
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="centerCrop"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"/>
-         -->
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:src="@drawable/ic_face_black"/>
+        android:clickable="true"
+        >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_face_black"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -42,24 +34,18 @@
             android:orientation="horizontal"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentEnd="true"
+            android:id="@+id/linearLayout2">
 
             <TextView
-                android:id="@+id/textview_status"
+                android:id="@+id/textview_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="Small Text"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                />
+                android:textSize="10sp"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:id="@+id/imageView_status"
-                android:src="@android:drawable/presence_online"
-                />
         </LinearLayout>
 
         <LinearLayout
@@ -67,10 +53,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
             android:orientation="vertical"
-            android:layout_marginLeft="8dp">
+            android:layout_marginLeft="8dp"
+            android:layout_toLeftOf="@+id/linearLayout2"
+            android:layout_toStartOf="@+id/linearLayout2"
+            >
 
 
             <TextView
@@ -81,19 +69,21 @@
                 android:layout_toEndOf="@+id/imageView"
                 android:layout_toRightOf="@+id/imageView"
                 android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
 
             <TextView
-                android:id="@+id/textView_last_seen"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView_msg"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linearLayout"
                 android:layout_toEndOf="@+id/imageView"
                 android:layout_toRightOf="@+id/imageView"
-                android:text="Small Text"
+                android:text="Small Text Small Text Small Text Small Text "
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="10sp"
-                android:paddingLeft="2dp"/>
+                android:textSize="12sp"
+                android:paddingLeft="2dp"
+                android:singleLine="true"/>
 
 
         </LinearLayout>

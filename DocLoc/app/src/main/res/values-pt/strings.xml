@@ -2,8 +2,18 @@
 <resources>
     <string name="app_name">DocLoc</string>
     <string name="title_activity_main">DocLoc</string>
-
     <string name="hello_world">Olá mundo!</string>
     <string name="action_settings">Definições</string>
     <string name="action_notifications">Notificações</string>
+    <string name="person_name">Nome</string>
+    <string name="person_email">Email</string>
+    <string name="person_department">Departamento</string>
+    <string name="person_office">Gabinete</string>
+    <string name="person_visiting_hours">Horário de Atendimento</string>
+    <string name="person_friday">Sexta-feira</string>
+    <string name="person_wednesday">Quarta-feira</string>
+    <string name="status_available">Disponível</string>
+    <string name="status_busy">Ocupado</string>
+    <string name="status_offline">Offline</string>
+    <string name="last_seen">Visto pela última vez: 19h40</string>
 </resources>

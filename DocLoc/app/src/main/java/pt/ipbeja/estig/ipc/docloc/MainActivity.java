@@ -262,9 +262,9 @@ public class MainActivity extends AppCompatActivity
                 case 1:
                     return FavoritesTab.newInstance(position + 1);
                 case 2:
-                    return ChatTab.newInstance(position + 1);
+                    return ChatListTab.newInstance(position + 1);
                 default:
-                    return ChatTab.newInstance(position + 1);
+                    return ChatListTab.newInstance(position + 1);
             }
         }
 

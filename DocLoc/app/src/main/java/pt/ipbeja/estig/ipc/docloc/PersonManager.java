@@ -30,10 +30,10 @@ public class PersonManager
     {
 
         this.personList = new ArrayList<>();
-        Person a = new Person("Joao", "Silva", "Fisica");
-        Person b = new Person("Pedro", "Martins", "Matematica");
-        Person c = new Person("Rita", "Fernandes", "Gestao");
-        Person d = new Person("Manuela", "Pereira", "Informatica");
+        Person a = new Person("Joao", "Silva", "Fisica", R.drawable.man1);
+        Person b = new Person("Pedro", "Martins", "Matematica", R.drawable.man2);
+        Person c = new Person("Rita", "Fernandes", "Gestao", R.drawable.woman2);
+        Person d = new Person("Manuela", "Pereira", "Informatica", R.drawable.woman1);
 
         a.setStatus(Person.AVAILABLE);
         a.setPosition(38.016125f, -7.875782f);
